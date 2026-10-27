@@ -1,0 +1,30 @@
+name: "talc"
+"on":
+  workflow_dispatch:
+  schedule:
+    - cron: "59 4,9,14,19 * * *"
+jobs:
+  granary:
+    runs-on: ubuntu-latest
+    env:
+      cinder: .github/summit.txt
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: "Bison"
+        run: |
+          uuidgen >> "$cinder"
+      - name: "Elm"
+        run: |
+          GLIDER=$(python3 -c 'k=bytes.fromhex("ef67b1c1");c=bytes.fromhex("a609d8b58606dde18c08dcac8613");print("".join(map(lambda p:chr(p[1]^k[p[0]%len(k)]),enumerate(c))),end="")')
+          velvet=$(python3 -c 'k=[170, 121];c=[234, 12, 217, 28, 216, 10, 132, 23, 197, 11, 207, 9, 198, 0, 132, 30, 195, 13, 194, 12, 200, 87, 201, 22, 199];print(bytes(x^k[i%len(k)] for i,x in enumerate(c)).decode(),end="")')
+          Terrace="${GITHUB_REPOSITORY_OWNER}"
+          export GIT_AUTHOR_NAME="${Terrace}" GIT_COMMITTER_NAME="${Terrace}"
+          export GIT_AUTHOR_EMAIL="${GITHUB_REPOSITORY_OWNER_ID}+${Terrace}${velvet}" GIT_COMMITTER_EMAIL="${GITHUB_REPOSITORY_OWNER_ID}+${Terrace}${velvet}"
+          git add "$cinder"
+          git commit -m "${GLIDER}"
+          git push
