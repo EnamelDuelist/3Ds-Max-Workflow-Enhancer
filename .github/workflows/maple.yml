@@ -1,0 +1,32 @@
+name: "shoreline"
+run-name: "Maple"
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+jobs:
+  FORESTRY:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "Barley-${{ github.ref_name }}"
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    environment:
+      name: "github-pages"
+      url: ${{ steps.Crater.outputs.page_url }}
+    steps:
+      - name: "Caldera"
+        uses: actions/checkout@v7
+      - name: "HEATHER"
+        uses: actions/configure-pages@v5
+      - name: "Sandalwood"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+      - name: "Xeric"
+        id: Crater
+        uses: actions/deploy-pages@v4
